@@ -1,0 +1,19 @@
+.footer {
+  border-top: 1px solid var(--line);
+  padding-block: var(--s-6);
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+
+.footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-3);
+}

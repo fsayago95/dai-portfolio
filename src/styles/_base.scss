@@ -1,0 +1,261 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+// The skip link moves focus here; a ring around the whole page is noise.
+main:focus {
+  outline: none;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: var(--fs-display);
+  line-height: 0.95;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.container {
+  width: min(100% - 2 * var(--gutter), 1200px);
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--s-2);
+  left: var(--s-2);
+  z-index: 20;
+  padding: var(--s-3) var(--s-4);
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+  transform: translateY(-200%);
+
+  &:focus-visible {
+    transform: none;
+    outline-color: var(--accent);
+  }
+}
+
+.label {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.section {
+  padding-block: var(--section-y);
+  scroll-margin-top: calc(var(--header-h) + var(--s-4));
+}
+
+.section-head {
+  position: relative;
+  display: grid;
+  gap: var(--s-4);
+  padding-top: var(--s-5);
+  margin-bottom: var(--s-7);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ink);
+    transform-origin: left;
+  }
+}
+
+// Section codes carry the accent so purple runs down the page, not just the hero.
+.section-head .label {
+  color: var(--accent);
+}
+
+@keyframes draw-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .section-head::before {
+      animation: draw-rule linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+
+// Links: always underlined, never colour only.
+.link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 150ms ease-out;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 3rem;
+  padding: 0 var(--s-5);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius);
+  font: 600 1rem/1 var(--font-ui);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+
+  &:hover {
+    background: color-mix(in srgb, var(--accent), var(--ink) 14%);
+  }
+
+  &:focus-visible {
+    outline-color: var(--ink);
+  }
+}
+
+.btn-secondary {
+  border-color: var(--ink);
+  color: var(--ink);
+
+  &:hover {
+    background: var(--surface);
+  }
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 150ms ease-out;
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .btn-primary {
+    border-color: ButtonText;
+  }
+}
+
+@media print {
+  .skip-link {
+    display: none;
+  }
+}
